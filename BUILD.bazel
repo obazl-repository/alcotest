@@ -1,0 +1,26 @@
+package(default_visibility = ["//visibility:public"])
+
+############################# Rules ##################################
+
+########
+genrule(
+    outs  = [
+    ],
+    name  = ":tools",
+    cmd   = " ".join([
+        "$(execpath //examples:simple.exe)",
+        "--help=plain",
+        "> $@"
+    ]),
+    exec_tools = [
+        "//examples:simple.exe"
+    ]
+)
+
+##########
+diff_test(
+    name  = "alcotest-help.txt.processed.diff_test",
+    file1  = ":alcotest-help.txt.processed",
+    file2  = ":alcotest-help.txt"
+)
+

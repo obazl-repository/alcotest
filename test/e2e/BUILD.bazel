@@ -1,0 +1,45 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_binary",
+     "ocaml_exec_module",
+     "ocaml_module",
+)
+
+DEPS_1 = [
+    "@opam_cmdliner//lib/cmdliner",
+    "@opam_fmt//lib/fmt"
+]
+
+DEPS_2 = [
+    "@ocaml//unix",
+    "@opam_re//lib/re"
+]
+
+##############################
+####  Executable Targets  ####
+ocaml_binary(
+    name     = "gen_dune_rules.exe",
+    main     = ":Gen_dune_rules",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Gen_dune_rules",
+    struct        = "gen_dune_rules.ml",
+    deps          = DEPS_1,
+)
+
+ocaml_binary(
+    name     = "strip_randomness.exe",
+    main     = ":Strip_randomness",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Strip_randomness",
+    struct        = "strip_randomness.ml",
+    deps          = DEPS_2,
+)
+
+######################## Modules & Signatures ########################

@@ -1,0 +1,79 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_archive",
+     "ocaml_ns_archive",
+     "ocaml_module",
+     "cc_selection_proxy",
+)
+
+DEPS_1 = [
+    "//src/alcotest-engine",
+    "@opam_astring//lib/astring",
+    "@opam_fmt//lib/fmt",
+    "@opam_fmt//lib/tty",
+    "@ocaml//unix"
+]
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_ns_archive(  #1
+    name       = "alcotest",
+    ns         = "alcotest",
+    manifest = [
+        ":Alcotest",
+        ":Terminal"
+    ],
+    cc_deps    = ["__libalcotest__"],
+)
+
+######################## Modules & Signatures ########################
+ocaml_module(
+    name          = "Alcotest",
+    struct        = "alcotest.ml",
+    sig           = "alcotest.mli",
+    deps          = DEPS_1 + [
+        ":Terminal"
+    ],
+)
+
+ocaml_module(
+    name          = "Terminal",
+    struct        = "terminal.ml",
+    sig           = "terminal.mli",
+    deps          = DEPS_1,
+)
+
+## cc: ((:name . alcotest) (:srcs alcotest_stubs))
+################ ################
+cc_selection_proxy(
+    name = "__libalcotest__",
+    selection = select({
+        "@ocaml//platforms:vm?": ["dllalcotest.stubs.so"],
+        "@ocaml//platforms:sys?": ["alcotest.stubs"],
+        "//conditions:default": ["alcotest.stubs"]    })
+)
+
+cc_binary(
+    name = "dllalcotest.stubs.so",
+    linkshared = True,
+    srcs = ["alcotest_stubs.c"],
+    deps = ["@ocaml//c"],
+    copts = ["-I", "external/ocaml/c"]
+)
+
+cc_library(
+    name = "alcotest.stubs",
+    linkstatic = True,
+    srcs = ["alcotest_stubs.c"],
+    deps = ["@ocaml//c"],
+    copts = ["-I", "external/ocaml/c"]
+)
+
+################################################################
+# jsoo_runtime_import(
+#     name = "jsoo_runtime",
+#     src  = "runtime.js"
+# )

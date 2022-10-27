@@ -1,0 +1,19 @@
+; mibl config
+
+[mibl]
+version = 0.1.0
+grammar=1.0.0-BETA
+
+[srcs]
+
+exclude = examples/bad
+
+exclude = src
+# exclude = src/alcotest-lwt
+# exclude = src/alcotest-mirage
+
+# exclude = test/e2e/alcotest/failing
+exclude = test/e2e/alcotest/inside-dune
+exclude = test/e2e/alcotest/passing
+exclude = test/e2e/alcotest-lwt
+exclude = test/e2e/alcotest-mirage

@@ -1,0 +1,34 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_archive",
+     "ocaml_ns_archive",
+     "ocaml_module",
+)
+
+DEPS_1 = [
+    "@opam_astring//lib/astring",
+    "@opam_cmdliner//lib/cmdliner",
+    "@opam_uutf//lib/uutf"
+]
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_archive(  ##
+    name       = "alcotest_stdlib_ext",
+    # ns       = "alcotest_stdlib_ext",
+    manifest = [
+        ":Alcotest_stdlib_ext"
+    ],
+)
+
+######################## Modules & Signatures ########################
+ocaml_module(
+    name          = "Alcotest_stdlib_ext",
+    struct        = "alcotest_stdlib_ext.ml",
+    sig           = "alcotest_stdlib_ext.mli",
+    deps          = DEPS_1,
+)
+

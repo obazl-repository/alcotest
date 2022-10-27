@@ -1,0 +1,27 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_module",
+)
+
+DEPS_TEST = [
+    "@opam_alcotest//lib/alcotest",
+    "@opam_alcotest-lwt//lib/alcotest-lwt",
+    "@opam_lwt//lib/lwt",
+    "@opam_lwt//lib/unix"
+]
+######################## Modules & Signatures ########################
+##############################
+####  Test Targets  ####
+ocaml_test(
+    name     = "test.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Test",
+    struct        = "test.ml",
+    deps          = [":#f_execlib"]
+,
+)
+

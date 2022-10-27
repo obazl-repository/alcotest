@@ -1,0 +1,48 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_archive",
+     "ocaml_ns_archive",
+     "ocaml_module",
+)
+
+DEPS_1 = [
+    "//src/alcotest-engine",
+    "//src/alcotest",
+    "@opam_async//lib/async",
+    "@opam_async_kernel//lib/async_kernel",
+    "@opam_async_unix//lib/async_unix",
+    "@opam_base//lib/base",
+    "@opam_core//lib/core",
+    "@opam_core_unix//lib/time_unix"
+]
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_ns_archive(  ##
+    name       = "alcotest-async",
+    ns         = "alcotest_async",
+    manifest = [
+        ":Alcotest_async",
+        ":Alcotest_async_intf"
+    ],
+)
+
+######################## Modules & Signatures ########################
+ocaml_module(
+    name          = "Alcotest_async",
+    struct        = "alcotest_async.ml",
+    sig           = "alcotest_async.mli",
+    deps          = DEPS_1 + [
+        ":Alcotest_async_intf"
+    ],
+)
+
+ocaml_module(
+    name          = "Alcotest_async_intf",
+    struct        = "alcotest_async_intf.ml",
+    deps          = DEPS_1,
+)
+

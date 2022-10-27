@@ -1,0 +1,84 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_module",
+)
+
+load("@rules_jsoo//build:rules.bzl", "jsoo_binary", "jsoo_library")
+
+load("@aspect_rules_js//js:defs.bzl",
+     "js_binary", "js_run_binary", "js_library", "js_test")
+
+DEPS_SIMPLE = [
+    "@opam_alcotest//lib/alcotest"
+]
+DEPS_FLOATS = [
+    "@opam_alcotest//lib/alcotest"
+]
+######################## Modules & Signatures ########################
+##############################
+####  Test Targets  ####
+#############
+js_test(
+    name        = "simple.bc.js",
+    entry_point = ":simple.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_test(
+    name     = "simple.exe.jsoo",
+    main   = ":simple.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_test(
+    name     = "simple.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Simple",
+    struct        = "simple.ml",
+    deps          = [":#f_execlib"]
+,
+)
+
+#############
+js_test(
+    name        = "floats.bc.js",
+    entry_point = ":floats.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_test(
+    name     = "floats.exe.jsoo",
+    main   = ":floats.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_test(
+    name     = "floats.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Floats",
+    struct        = "floats.ml",
+    deps          = [":#f_execlib"]
+,
+)
+
+##############
+js_run_binary(
+    name  = "__floats.bc.js__",
+    tool  = ":floats.bc.js",
+    stdout  = "floats.bc.js.stdout"
+)
+
+##############
+js_run_binary(
+    name  = "__simple.bc.js__",
+    tool  = ":simple.bc.js",
+    stdout  = "simple.bc.js.stdout"
+)
+

@@ -1,0 +1,235 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_archive",
+     "ocaml_ns_archive",
+     "ocaml_module",
+)
+
+DEPS_1 = [
+    "//src/alcotest-stdlib-ext:alcotest_stdlib_ext",
+    "@opam_fmt//lib/fmt",
+    "@opam_astring//lib/astring",
+    "@opam_cmdliner//lib/cmdliner",
+    "@opam_fmt//lib/cli",
+    "@opam_re//lib/re",
+    "@opam_stdlib-shims//lib/stdlib-shims",
+    "@opam_uutf//lib/uutf"
+]
+
+#############################
+####  Aggregate Targets  ####
+
+#################
+ocaml_ns_archive(  ##
+    name       = "alcotest-engine",
+    ns         = "alcotest_engine",
+    manifest = [
+        ":Alcotest_engine",
+        ":Cli",
+        ":Cli_intf",
+        ":Config",
+        ":Config_intf",
+        ":Core",
+        ":Core_intf",
+        ":Import",
+        ":Log_trap",
+        ":Log_trap_intf",
+        ":Model",
+        ":Monad",
+        ":Monad_intf",
+        ":Platform",
+        ":Pp",
+        ":Pp_intf",
+        ":Safe_string",
+        ":Test"
+    ],
+)
+
+######################## Modules & Signatures ########################
+ocaml_module(
+    name          = "Alcotest_engine",
+    struct        = "alcotest_engine.ml",
+    sig           = "alcotest_engine.mli",
+    deps          = DEPS_1 + [
+        ":Cli",
+        ":Core",
+        ":Monad",
+        ":Platform",
+        ":Pp",
+        ":Test"
+    ],
+)
+
+ocaml_module(
+    name          = "Cli",
+    struct        = "cli.ml",
+    sig           = "cli.mli",
+    deps          = DEPS_1 + [
+        ":Config",
+        ":Core",
+        ":Import",
+        ":Monad",
+        ":Platform",
+        ":Cli_intf"
+    ],
+)
+
+ocaml_module(
+    name          = "Config",
+    struct        = "config.ml",
+    sig           = "config.mli",
+    deps          = DEPS_1 + [
+        ":Import",
+        ":Config_intf"
+    ],
+)
+
+ocaml_module(
+    name          = "Core",
+    struct        = "core.ml",
+    sig           = "core.mli",
+    deps          = DEPS_1 + [
+        ":Config",
+        ":Import",
+        ":Log_trap",
+        ":Model",
+        ":Monad",
+        ":Platform",
+        ":Pp",
+        ":Safe_string",
+        ":Core_intf"
+    ],
+)
+
+ocaml_module(
+    name          = "Log_trap",
+    struct        = "log_trap.ml",
+    sig           = "log_trap.mli",
+    deps          = DEPS_1 + [
+        ":Import",
+        ":Model",
+        ":Monad",
+        ":Platform",
+        ":Pp",
+        ":Log_trap_intf"
+    ],
+)
+
+ocaml_module(
+    name          = "Monad",
+    struct        = "monad.ml",
+    sig           = "monad.mli",
+    deps          = DEPS_1 + [
+        ":Monad_intf"
+    ],
+)
+
+ocaml_module(
+    name          = "Pp",
+    struct        = "pp.ml",
+    sig           = "pp.mli",
+    deps          = DEPS_1 + [
+        ":Import",
+        ":Model",
+        ":Pp_intf"
+    ],
+)
+
+ocaml_module(
+    name          = "Safe_string",
+    struct        = "safe_string.ml",
+    sig           = "safe_string.mli",
+    deps          = DEPS_1 + [
+        ":Import"
+    ],
+)
+
+ocaml_module(
+    name          = "Test",
+    struct        = "test.ml",
+    sig           = "test.mli",
+    deps          = DEPS_1 + [
+        ":Core",
+        ":Pp"
+    ],
+)
+
+ocaml_module(
+    name          = "Cli_intf",
+    struct        = "cli_intf.ml",
+    deps          = DEPS_1 + [
+        ":Core",
+        ":Import",
+        ":Monad",
+        ":Platform"
+    ],
+)
+
+ocaml_module(
+    name          = "Config_intf",
+    struct        = "config_intf.ml",
+    deps          = DEPS_1,
+)
+
+ocaml_module(
+    name          = "Core_intf",
+    struct        = "core_intf.ml",
+    deps          = DEPS_1 + [
+        ":Config",
+        ":Import",
+        ":Monad",
+        ":Platform"
+    ],
+)
+
+ocaml_module(
+    name          = "Import",
+    struct        = "import.ml",
+    deps          = DEPS_1,
+)
+
+ocaml_module(
+    name          = "Log_trap_intf",
+    struct        = "log_trap_intf.ml",
+    deps          = DEPS_1 + [
+        ":Import",
+        ":Model",
+        ":Monad",
+        ":Platform"
+    ],
+)
+
+ocaml_module(
+    name          = "Model",
+    struct        = "model.ml",
+    deps          = DEPS_1 + [
+        ":Import",
+        ":Monad",
+        ":Safe_string"
+    ],
+)
+
+ocaml_module(
+    name          = "Monad_intf",
+    struct        = "monad_intf.ml",
+    deps          = DEPS_1,
+)
+
+ocaml_module(
+    name          = "Platform",
+    struct        = "platform.ml",
+    deps          = DEPS_1 + [
+        ":Import",
+        ":Monad"
+    ],
+)
+
+ocaml_module(
+    name          = "Pp_intf",
+    struct        = "pp_intf.ml",
+    deps          = DEPS_1 + [
+        ":Model"
+    ],
+)
+
