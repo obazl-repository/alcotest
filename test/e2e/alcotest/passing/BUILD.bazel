@@ -1,0 +1,575 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_ocaml//build:rules.bzl",
+     "ocaml_binary",
+     "ocaml_library",
+     "ocaml_ns_library",
+     "ocaml_exec_module",
+     "ocaml_module",
+)
+
+load("@rules_jsoo//build:rules.bzl", "jsoo_binary", "jsoo_library")
+
+load("@aspect_rules_js//js:defs.bzl",
+     "js_binary", "js_run_binary", "js_library", "js_test")
+
+load("//test/e2e/alcotest:BUILD.bzl", "make_tests")
+
+DEPS_1 = [
+    "@opam_alcotest//lib/alcotest",
+    "@opam_alcotest//lib/stdlib_ext",
+    "@opam_alcotest//lib/engine"
+]
+
+make_tests(
+    tests = {
+        "and_exit_false": "",
+        "and_exit_true": "",
+        "assert_and_verbose": "",
+        "assert_not_printed": "",
+        "basic": "",
+        "check_basic": "",
+        "cli_verbose": "--verbose",
+        "compact": "--compact",      # fail
+        "empty_test_name": "",
+        "filter_name": "",
+        "filter_name_regex": "",
+        "filter_range": "test main 0..1,1-3,5",
+        "isatty": "",
+        "json_output": "",
+        "list_tests": "",
+        "only_monadic_effects": "",
+        "quick_only": "",
+        "quick_only_regex": "",
+        "separator_testname": "",
+        "unicode_testname": "",
+        "verbose_newlines": "",
+    }
+)
+
+##############################
+####  Executable Targets  ####
+#############
+js_binary(
+    name        = "and_exit_false.bc.js",
+    entry_point = ":and_exit_false.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "and_exit_false.exe.jsoo",
+    main   = ":and_exit_false.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "and_exit_false.exe",
+    main     = ":And_exit_false",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "And_exit_false",
+    struct        = "and_exit_false.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "and_exit_true.bc.js",
+    entry_point = ":and_exit_true.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "and_exit_true.exe.jsoo",
+    main   = ":and_exit_true.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "and_exit_true.exe",
+    main     = ":And_exit_true",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "And_exit_true",
+    struct        = "and_exit_true.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "assert_and_verbose.bc.js",
+    entry_point = ":assert_and_verbose.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "assert_and_verbose.exe.jsoo",
+    main   = ":assert_and_verbose.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "assert_and_verbose.exe",
+    main     = ":Assert_and_verbose",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Assert_and_verbose",
+    struct        = "assert_and_verbose.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "assert_not_printed.bc.js",
+    entry_point = ":assert_not_printed.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "assert_not_printed.exe.jsoo",
+    main   = ":assert_not_printed.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "assert_not_printed.exe",
+    main     = ":Assert_not_printed",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Assert_not_printed",
+    struct        = "assert_not_printed.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "basic.bc.js",
+    entry_point = ":basic.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "basic.exe.jsoo",
+    main   = ":basic.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "basic.exe",
+    main     = ":Basic",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Basic",
+    struct        = "basic.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "check_basic.bc.js",
+    entry_point = ":check_basic.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "check_basic.exe.jsoo",
+    main   = ":check_basic.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "check_basic.exe",
+    main     = ":Check_basic",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Check_basic",
+    struct        = "check_basic.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "cli_verbose.bc.js",
+    entry_point = ":cli_verbose.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "cli_verbose.exe.jsoo",
+    main   = ":cli_verbose.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "cli_verbose.exe",
+    main     = ":Cli_verbose",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Cli_verbose",
+    struct        = "cli_verbose.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "compact.bc.js",
+    entry_point = ":compact.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "compact.exe.jsoo",
+    main   = ":compact.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "compact.exe",
+    main     = ":Compact",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Compact",
+    struct        = "compact.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "empty_test_name.bc.js",
+    entry_point = ":empty_test_name.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "empty_test_name.exe.jsoo",
+    main   = ":empty_test_name.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "empty_test_name.exe",
+    main     = ":Empty_test_name",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Empty_test_name",
+    struct        = "empty_test_name.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "filter_name.bc.js",
+    entry_point = ":filter_name.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "filter_name.exe.jsoo",
+    main   = ":filter_name.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "filter_name.exe",
+    main     = ":Filter_name",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Filter_name",
+    struct        = "filter_name.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "filter_name_regex.bc.js",
+    entry_point = ":filter_name_regex.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "filter_name_regex.exe.jsoo",
+    main   = ":filter_name_regex.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "filter_name_regex.exe",
+    main     = ":Filter_name_regex",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Filter_name_regex",
+    struct        = "filter_name_regex.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "filter_range.bc.js",
+    entry_point = ":filter_range.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "filter_range.exe.jsoo",
+    main   = ":filter_range.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "filter_range.exe",
+    main     = ":Filter_range",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Filter_range",
+    struct        = "filter_range.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "isatty.bc.js",
+    entry_point = ":isatty.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "isatty.exe.jsoo",
+    main   = ":isatty.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "isatty.exe",
+    main     = ":Isatty",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Isatty",
+    struct        = "isatty.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "json_output.bc.js",
+    entry_point = ":json_output.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "json_output.exe.jsoo",
+    main   = ":json_output.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "json_output.exe",
+    main     = ":Json_output",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Json_output",
+    struct        = "json_output.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "list_tests.bc.js",
+    entry_point = ":list_tests.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "list_tests.exe.jsoo",
+    main   = ":list_tests.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "list_tests.exe",
+    main     = ":List_tests",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "List_tests",
+    struct        = "list_tests.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "only_monadic_effects.bc.js",
+    entry_point = ":only_monadic_effects.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "only_monadic_effects.exe.jsoo",
+    main   = ":only_monadic_effects.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "only_monadic_effects.exe",
+    main     = ":Only_monadic_effects",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Only_monadic_effects",
+    struct        = "only_monadic_effects.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "quick_only.bc.js",
+    entry_point = ":quick_only.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "quick_only.exe.jsoo",
+    main   = ":quick_only.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "quick_only.exe",
+    main     = ":Quick_only",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Quick_only",
+    struct        = "quick_only.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "quick_only_regex.bc.js",
+    entry_point = ":quick_only_regex.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "quick_only_regex.exe.jsoo",
+    main   = ":quick_only_regex.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "quick_only_regex.exe",
+    main     = ":Quick_only_regex",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Quick_only_regex",
+    struct        = "quick_only_regex.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "separator_testname.bc.js",
+    entry_point = ":separator_testname.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "separator_testname.exe.jsoo",
+    main   = ":separator_testname.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "separator_testname.exe",
+    main     = ":Separator_testname",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Separator_testname",
+    struct        = "separator_testname.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "unicode_testname.bc.js",
+    entry_point = ":unicode_testname.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "unicode_testname.exe.jsoo",
+    main   = ":unicode_testname.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "unicode_testname.exe",
+    main     = ":Unicode_testname",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Unicode_testname",
+    struct        = "unicode_testname.ml",
+    deps          = DEPS_1,
+)
+
+#############
+js_binary(
+    name        = "verbose_newlines.bc.js",
+    entry_point = ":verbose_newlines.exe.jsoo",
+    visibility  = ["//visibility:public"],
+)
+
+jsoo_binary(
+    name     = "verbose_newlines.exe.jsoo",
+    main   = ":verbose_newlines.exe",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_binary(
+    name     = "verbose_newlines.exe",
+    main     = ":Verbose_newlines",
+    visibility = ["//visibility:public"],
+)
+
+ocaml_exec_module(
+    name          = "Verbose_newlines",
+    struct        = "verbose_newlines.ml",
+    deps          = DEPS_1,
+)

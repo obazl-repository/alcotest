@@ -1,0 +1,13 @@
+exports_files([
+    "gen_actuals.sh",
+    "test_runner.sh"
+])
+
+
+test_suite(
+    name  = "all_tests",
+    tests = [
+        "//test/e2e/alcotest/failing:all_tests",
+        "//test/e2e/alcotest/passing:all_tests",
+    ]
+)

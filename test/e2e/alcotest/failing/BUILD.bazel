@@ -12,7 +12,7 @@ load("@rules_jsoo//build:rules.bzl", "jsoo_binary", "jsoo_library")
 load("@aspect_rules_js//js:defs.bzl",
      "js_binary", "js_run_binary", "js_library", "js_test")
 
-load(":BUILD.bzl", "make_tests")
+load("//test/e2e/alcotest:BUILD.bzl", "make_tests")
 
 DEPS_1 = [
     "@opam_alcotest//lib/alcotest",
@@ -21,21 +21,23 @@ DEPS_1 = [
 ]
 
 make_tests(
-    tests = [
-        "bail",
-        "check_basic",
-        "check_located",
-        "check_long",
-        "empty_suite_name",
-        # "exception_in_test",
-        # "filter_all_tests",
-        "invalid_arg_in_test",
-        "long_test_case_name",
-        "outside_runner",
-        "tail_errors_limit",
-        "tail_errors_unlimited",
-        # "unknown_option"
-    ]
+    tests = {
+        "bail": "",
+        "check_basic": "",
+        "check_located": "",
+        "check_long": "",
+        "compact": "",
+        "duplicate_test_names": "",
+        "empty_suite_name": "",
+        "exception_in_test": "",
+        "filter_all_tests": "test bar 1",
+        "invalid_arg_in_test": "",
+        "long_test_case_name": "",
+        "outside_runner": "",
+        "tail_errors_limit": "",
+        "tail_errors_unlimited": "",
+        "unknown_option": "--dry-runn"
+    }
 )
 
 ##############################
@@ -154,21 +156,21 @@ jsoo_binary(
 )
 
 ########
-sh_test(
-    name = "compact_test",
-    srcs = ["test_runner.sh"],
-    args = [
-        "compact",
-        "$(rootpath :compact.exe)",
-        "$(rootpath //test/e2e:strip_randomness.exe)",
-        "$(rootpath :compact.expected)"
-    ],
-    data = [
-        ":compact.exe",
-        "//test/e2e:strip_randomness.exe",
-        ":compact.expected"
-    ]
-)
+# sh_test(
+#     name = "compact_test",
+#     srcs = ["test_runner.sh"],
+#     args = [
+#         "compact",
+#         "$(rootpath :compact.exe)",
+#         "$(rootpath //test/e2e:strip_randomness.exe)",
+#         "$(rootpath :compact.expected)"
+#     ],
+#     data = [
+#         ":compact.exe",
+#         "//test/e2e:strip_randomness.exe",
+#         ":compact.expected"
+#     ]
+# )
 
 ocaml_binary(
     name     = "compact.exe",
@@ -196,21 +198,21 @@ jsoo_binary(
 )
 
 ########
-sh_test(
-    name = "duplicate_test_names_test",
-    srcs = ["test_runner.sh"],
-    args = [
-        "duplicate_test_names",
-        "$(rootpath :duplicate_test_names.exe)",
-        "$(rootpath //test/e2e:strip_randomness.exe)",
-        "$(rootpath :duplicate_test_names.expected)"
-    ],
-    data = [
-        ":duplicate_test_names.exe",
-        "//test/e2e:strip_randomness.exe",
-        ":duplicate_test_names.expected"
-    ]
-)
+# sh_test(
+#     name = "duplicate_test_names_test",
+#     srcs = ["test_runner.sh"],
+#     args = [
+#         "duplicate_test_names",
+#         "$(rootpath :duplicate_test_names.exe)",
+#         "$(rootpath //test/e2e:strip_randomness.exe)",
+#         "$(rootpath :duplicate_test_names.expected)"
+#     ],
+#     data = [
+#         ":duplicate_test_names.exe",
+#         "//test/e2e:strip_randomness.exe",
+#         ":duplicate_test_names.expected"
+#     ]
+# )
 
 ocaml_binary(
     name     = "duplicate_test_names.exe",
